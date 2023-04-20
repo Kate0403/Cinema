@@ -23,7 +23,13 @@ public class FilmsServlet extends HttpServlet {
 
         final String[] json = new String[1];
         filmService.findAll().forEach (FilmDto-> {
-        FilmDto Film = new FilmDto(FilmDto.getID(), FilmDto.getTitle(), FilmDto.getDescription(), FilmDto.getGenre(), FilmDto.getDuration(), FilmDto.getCountry());
+                FilmDto Film = FilmDto.builder()
+                                .ID(FilmDto.getID())
+                                .Title(FilmDto.getTitle())
+                                .Description(FilmDto.getDescription())
+                                .Genre(FilmDto.getGenre())
+                                .Duration(FilmDto.getDuration())
+                                .Country(FilmDto.getCountry()).build();
 
 
             try {
@@ -50,19 +56,5 @@ public class FilmsServlet extends HttpServlet {
         });
     }
 }
-   /*
-            filmService.findAll().forEach
-                 
-                    (FilmDto -> {
-
-            <li>
-            <a href="/seance?filmID=%d">%s</a>
-            </li>
-            """.formatted(FilmDto.getID(), FilmDto.getDescription()));
-});
-            printWriter.write("</ul>");
-        }
-        
-                     */
 
 

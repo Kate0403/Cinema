@@ -1,6 +1,7 @@
 package com.example.cinema.service;
 
 import com.example.cinema.dao.UsersDao;
+import com.example.cinema.dto.CreateUsersDto;
 import com.example.cinema.dto.UsersDto;
 
 import java.util.List;
@@ -13,7 +14,15 @@ public class UserService {
 
     private final UsersDao usersDao = UsersDao.getInstance();
 
-    public UserService() {
+    private UserService() {
+    }
+
+    public Long registration(CreateUsersDto usersDto){
+        //validation
+        //map
+        //userDto.save
+        //return id
+        return null;
     }
 
     public List<UsersDto> findAll(){

@@ -1,10 +1,13 @@
 package com.example.cinema.dao;
 
+
 import com.example.cinema.entity.Users;
 import com.example.cinema.util.ConnectionDB;
+import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +18,10 @@ public class UsersDao implements Dao<Integer, Users>{
     private static final String FIND_ALL= """
             SELECT *
             FROM Users;
+            """;
+    private static final String REGISTER_USER = """
+            INSERT INTO Users ("Full_name", "Login_phone", "Password")
+            VALUES (?, ?, ?)
             """;
 
     private UsersDao() {}
@@ -53,8 +60,24 @@ public class UsersDao implements Dao<Integer, Users>{
     }
 
     @Override
+    @SneakyThrows
     public Users save(Users entity) {
-        return null;
+        try(var connection = ConnectionDB.get();
+            var preparedStarement = connection.prepareStatement(REGISTER_USER, Statement.RETURN_GENERATED_KEYS)
+        ){
+          preparedStarement.setObject(1, entity.getFull_name());
+          preparedStarement.setObject(2, entity.getLogin_phone());
+          preparedStarement.setObject(3, entity.getPassword());
+
+          preparedStarement.executeUpdate();
+
+          var generatedKeys = preparedStarement.getGeneratedKeys();
+          generatedKeys.next();
+          entity.setID(generatedKeys.getObject("id", Integer.class));
+
+          return entity;
+        }
+
     }
 
     public static UsersDao getInstance(){

@@ -1,9 +1,12 @@
 package com.example.cinema.util;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
+@UtilityClass
 public class ConnectionDB {
 private static final String URL_KEY="db.url";
 private static final String USER_KEY="db.user";
@@ -24,17 +27,15 @@ static {
         }
     }
 
-    private ConnectionDB(){
-    }
 
+
+    @SneakyThrows
     public static Connection get(){
-        try {
+
             return DriverManager.getConnection(
                     PropertiesUtil.get(URL_KEY),
                     PropertiesUtil.get(USER_KEY),
                     PropertiesUtil.get(PASSWORD_KEY));
-        } catch (SQLException throwables) {
-            throw new RuntimeException(throwables);
-        }
+
     }
 }

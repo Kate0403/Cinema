@@ -19,7 +19,14 @@ public class FilmService {
 
     }
     public List<FilmDto> findAll(){
-    return filmDao.findAll().stream().map(Films -> new FilmDto(Films.getID(), Films.getTitle(), Films.getDescription(), Films.getGenre(), Films.getDuration(), Films.getCountry())).collect(toList());
+    return filmDao.findAll().stream().map(Films -> FilmDto.builder()
+            .ID(Films.getID())
+            .Title(Films.getTitle())
+            .Description(Films.getDescription())
+            .Genre(Films.getGenre())
+            .Duration(Films.getDuration())
+            .Country(Films.getCountry()).build())
+            .collect(toList());
     }
     public static FilmService getInstance() {
         return INSTANCE;

@@ -64,7 +64,7 @@ public class TicketsDao implements Dao<Integer, Tickets>{
 
     private Tickets buildTickets(ResultSet resultSet) throws SQLException{
 
-        return new Tickets(
+        return Tickets(
                 resultSet.getObject("ID", Integer.class),
                 resultSet.getObject("Session_id", Integer.class),
                 resultSet.getObject("Price", DecimalFormat.class),
