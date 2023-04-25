@@ -64,12 +64,13 @@ public class TicketsDao implements Dao<Integer, Tickets>{
 
     private Tickets buildTickets(ResultSet resultSet) throws SQLException{
 
-        return Tickets(
-                resultSet.getObject("ID", Integer.class),
-                resultSet.getObject("Session_id", Integer.class),
-                resultSet.getObject("Price", DecimalFormat.class),
-                resultSet.getObject("User_id", Integer.class)
-        );
+        return Tickets.builder().
+                ID(resultSet.getObject("ID", Integer.class)).
+                Session_id(resultSet.getObject("Session_id", Integer.class)).
+                Price(resultSet.getObject("Price", DecimalFormat.class)).
+                User_id(resultSet.getObject("User_id", Integer.class)).
+                build();
+
     }
 
 

@@ -73,7 +73,7 @@ public class UsersDao implements Dao<Integer, Users>{
 
           var generatedKeys = preparedStarement.getGeneratedKeys();
           generatedKeys.next();
-          entity.setID(generatedKeys.getObject("id", Integer.class));
+          entity.builder().ID(generatedKeys.getObject("id", Integer.class));
 
           return entity;
         }
@@ -86,11 +86,11 @@ public class UsersDao implements Dao<Integer, Users>{
 
     private Users buildUsers(ResultSet resultSet) throws SQLException{
 
-        return new Users(
-                resultSet.getObject("ID", Integer.class),
-                resultSet.getObject("Full_name", String.class),
-                resultSet.getObject("Login_phone", Integer.class),
-                resultSet.getObject("Password", String.class)
-        );
+        return Users.builder().
+                ID(resultSet.getObject("ID", Integer.class)).
+                Full_name(resultSet.getObject("Full_name", String.class)).
+                Login_phone(resultSet.getObject("Login_phone", Integer.class)).
+                Password(resultSet.getObject("Password", String.class)).
+                build();
     }
 }

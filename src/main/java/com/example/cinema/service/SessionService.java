@@ -16,7 +16,15 @@ public class SessionService {
     }
 
     public List<SessionsDto> findAll(){
-        return sessionsDao.findAll().stream().map(Sessions -> new SessionsDto(Sessions.getID(), Sessions.getFilm_id(), Sessions.getHall_id(), Sessions.getDate(), Sessions.getNumber_tikets())).collect(toList());
+        return sessionsDao.findAll().stream().map(Sessions -> SessionsDto.builder()
+                        .ID(Sessions.getID())
+                        .Film_id(Sessions.getFilm_id())
+                        .Hall_id(Sessions.getHall_id())
+                        .Date(Sessions.getDate())
+                        .Number_tikets(Sessions.getNumber_tikets())
+                .build()
+
+        ).collect(toList());
     }
     public static SessionService getInstance() {
         return INSTANCE;

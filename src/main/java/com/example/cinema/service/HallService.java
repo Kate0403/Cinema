@@ -17,7 +17,12 @@ public class HallService {
     }
 
     public List<HallsDto> findAll(){
-        return hallsDao.findAll().stream().map(Halls -> new HallsDto(Halls.getID(), Halls.getCinema_id(), Halls.getName(), Halls.getNumber_seats())).collect(toList());
+        return hallsDao.findAll().stream().map(Halls -> HallsDto.builder()
+                        .ID(Halls.getID())
+                        .Cinema_id(Halls.getCinema_id())
+                        .Name(Halls.getName())
+                .Number_seats(Halls.getNumber_seats()).build()
+        ).collect(toList());
     }
     public static HallService getInstance() {
         return INSTANCE;

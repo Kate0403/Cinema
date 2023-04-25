@@ -26,7 +26,13 @@ public class UserService {
     }
 
     public List<UsersDto> findAll(){
-        return usersDao.findAll().stream().map(Users -> new UsersDto(Users.getID(), Users.getFull_name(), Users.getLogin_phone(), Users.getPassword())).collect(toList());
+        return usersDao.findAll().stream().map(Users -> UsersDto.builder()
+                                .ID(Users.getID())
+                                .Full_name(Users.getFull_name())
+                                .Login_phone(Users.getLogin_phone())
+                        .Password(Users.getPassword())
+                .build()
+        ).collect(toList());
     }
     public static UserService getInstance() {
         return INSTANCE;

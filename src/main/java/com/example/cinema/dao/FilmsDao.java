@@ -67,12 +67,12 @@ public static FilmsDao getInstance(){
     private Films buildFilms(ResultSet resultSet) throws SQLException{
 
         return Films.builder().
-                resultSet.getObject("ID", Integer.class).
-                resultSet.getObject("Title", String.class).
-                resultSet.getObject("Description", String.class).
-                resultSet.getObject("Genre", String.class).
-                resultSet.getObject("Duration", Time.class).
-                resultSet.getObject("Country", String.class)
+                ID(resultSet.getObject("ID", Integer.class)).
+                Title(resultSet.getObject("Title", String.class)).
+                Description(resultSet.getObject("Description", String.class)).
+                Genre(resultSet.getObject("Genre", String.class)).
+                Duration(resultSet.getObject("Duration", Time.class)).
+                Country(resultSet.getObject("Country", String.class))
                 .build();
 
     }

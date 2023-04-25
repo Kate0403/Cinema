@@ -62,11 +62,12 @@ public class CinemasDao implements Dao<Integer, Cinemas>{
 
     private Cinemas buildCinemas(ResultSet resultSet) throws SQLException{
 
-        return new Cinemas(
-                resultSet.getObject("ID", Integer.class),
-                resultSet.getObject("Name", String.class),
-                resultSet.getObject("Phone", Integer.class),
-                resultSet.getObject("Address", String.class)
-        );
+        return Cinemas.builder().
+                ID(resultSet.getObject("ID", Integer.class)).
+                Name(resultSet.getObject("Name", String.class)).
+                Phone(resultSet.getObject("Phone", Integer.class)).
+                Address(resultSet.getObject("Address", String.class)).
+                build();
+
     }
 }

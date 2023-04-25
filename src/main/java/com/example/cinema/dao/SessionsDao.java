@@ -65,12 +65,12 @@ public class SessionsDao implements Dao<Integer, Sessions>{
 
     private Sessions buildSessions(ResultSet resultSet) throws SQLException{
 
-        return new Sessions(
-                resultSet.getObject("ID", Integer.class),
-                resultSet.getObject("Film_id", Integer.class),
-                resultSet.getObject("Hall_id", Integer.class),
-                resultSet.getObject("Date", Date.class),
-                resultSet.getObject("Number_seats", Integer.class)
-        );
+        return Sessions.builder().
+                ID(resultSet.getObject("ID", Integer.class)).
+                Film_id(resultSet.getObject("Film_id", Integer.class)).
+                Hall_id(resultSet.getObject("Hall_id", Integer.class)).
+                Date(resultSet.getObject("Date", Date.class)).
+                Number_tikets(resultSet.getObject("Number_seats", Integer.class)).
+                build();
     }
 }

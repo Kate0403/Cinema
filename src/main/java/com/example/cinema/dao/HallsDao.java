@@ -64,12 +64,13 @@ public class HallsDao implements Dao<Integer, Halls>{
 
     private Halls buildHalls(ResultSet resultSet) throws SQLException{
 
-        return new Halls(
-                resultSet.getObject("ID", Integer.class),
-                resultSet.getObject("Cinema_id", Integer.class),
-                resultSet.getObject("Name", String.class),
-                resultSet.getObject("Number_seats", Integer.class)
-        );
+        return  Halls.builder().
+                ID(resultSet.getObject("ID", Integer.class)).
+                Cinema_id(resultSet.getObject("Cinema_id", Integer.class)).
+                Name(resultSet.getObject("Name", String.class)).
+                Number_seats(resultSet.getObject("Number_seats", Integer.class)).
+                build();
+
     }
 
 }

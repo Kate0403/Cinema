@@ -16,7 +16,13 @@ public class TicketService {
     }
 
     public List<TicketsDto> findAll(){
-        return ticketsDao.findAll().stream().map(Tickets -> new TicketsDto(Tickets.getID(), Tickets.getSession_id(), Tickets.getPrice(), Tickets.getUser_id())).collect(toList());
+        return ticketsDao.findAll().stream().map(Tickets -> TicketsDto.builder()
+                        .ID(Tickets.getID())
+                        .Session_id(Tickets.getSession_id())
+                        .Price(Tickets.getPrice())
+                .User_id(Tickets.getUser_id())
+                .build()
+        ).collect(toList());
     }
     public static TicketService getInstance() {
         return INSTANCE;
