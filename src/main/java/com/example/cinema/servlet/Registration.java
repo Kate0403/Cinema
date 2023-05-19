@@ -2,6 +2,7 @@ package com.example.cinema.servlet;
 
 
 import com.example.cinema.dto.CreateUsersDto;
+import com.example.cinema.exeption.RegistrationExeption;
 import com.example.cinema.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class Registration  extends HttpServlet {
 
 
         super.doGet(req, resp);
+
     }
 
     @Override
@@ -32,7 +34,14 @@ public class Registration  extends HttpServlet {
                 .Password(req.getParameter("Password"))
                         .build();
 
-        userService.registration(usersDto);
-        resp.sendRedirect("/login");
+        try {
+
+
+            userService.registration(usersDto);
+            resp.sendRedirect("/login");
+        } catch (RegistrationExeption exeption){
+            req.setAttribute("errors", exeption.getErrors());
+            doGet(req, resp);
+        }
     }
 }

@@ -23,7 +23,9 @@ public class UsersDao implements Dao<Integer, Users>{
             INSERT INTO Users ("Full_name", "Login_phone", "Password")
             VALUES (?, ?, ?)
             """;
-
+    private static final String GET_BY_EMAIL_AND_PASSWORD_SQL = """
+            SELECT * FROM users WHERE login_phone= ? AND password = ?;
+            """;
     private UsersDao() {}
 
     @Override
@@ -49,6 +51,27 @@ public class UsersDao implements Dao<Integer, Users>{
         return Optional.empty();
     }
 
+    @SneakyThrows
+    public Optional<Users> findByPhoneAndPassword(String login_phone, String password) {
+        try(var connection = ConnectionDB.get();
+        var prepareStatement = connection.prepareStatement(GET_BY_EMAIL_AND_PASSWORD_SQL)){
+        prepareStatement.setString(1, login_phone);
+        prepareStatement.setString(2, password);
+
+        var resultSet = prepareStatement.executeQuery();
+        Users user = null;
+        if(resultSet.next()){
+    user = Users.builder()
+            .ID(resultSet.getObject("ID", Integer.class))
+            .Full_name(resultSet.getObject("Full_name", String.class))
+            .Login_phone(resultSet.getObject("Login_phone", Integer.class))
+            .Password(resultSet.getObject("Password", String.class))
+            .build();
+        }
+        return Optional.ofNullable(user);
+        }
+      //  return Optional.empty();
+    }
     @Override
     public boolean delete(Integer id) {
         return false;
@@ -68,7 +91,7 @@ public class UsersDao implements Dao<Integer, Users>{
           preparedStarement.setObject(1, entity.getFull_name());
           preparedStarement.setObject(2, entity.getLogin_phone());
           preparedStarement.setObject(3, entity.getPassword());
-
+//может быть поьребуется дописать .name() для преобразоапния в строку
           preparedStarement.executeUpdate();
 
           var generatedKeys = preparedStarement.getGeneratedKeys();
